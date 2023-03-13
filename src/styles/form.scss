@@ -1,0 +1,13 @@
+// $formInputWidth: 480px;
+$textareaHeight: 78px;
+
+// :deep(.el-input.el-input) {
+//    width: $formInputWidth;
+// }
+:deep(.el-textarea.el-textarea) {
+  // width: $formInputWidth;
+  height: $textareaHeight;
+}
+:deep(.el-textarea__inner) {
+  height: $textareaHeight;
+}

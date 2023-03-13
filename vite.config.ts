@@ -42,12 +42,12 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       pure: viteEnv.VITE_DROP_CONSOLE ? ["console.log", "debugger"] : [],
     },
     // global css
-    // css: {
-    //   preprocessorOptions: {
-    //     scss: {
-    //       additionalData: `@import "@/styles/var.scss";`,
-    //     },
-    //   },
-    // },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import "@/styles/var.scss";`,
+        },
+      },
+    },
   };
 });
