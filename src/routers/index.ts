@@ -5,13 +5,13 @@
  * @LastEditTime: 2023-03
  * @Description:router index
  */
-import router from "@/routers/router";
+import router from '@/routers/router'
 
 /**
  * @description 路由拦截 beforeEach
  * */
 router.beforeEach((to, from, next) => {
   // 正常访问页面
-  next();
-});
-export default router;
+  next()
+})
+export default router

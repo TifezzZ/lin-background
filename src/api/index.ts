@@ -2,7 +2,7 @@
  * @Author: yujingbo
  * @Date: 2022-11
  * @LastEditors: yujingbo
- * @LastEditTime: 2023-02
+ * @LastEditTime: 2023-03
  * @Description:
  */
 import axios, { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
@@ -53,11 +53,14 @@ class RequestHttp {
         axiosCanceler.addPending(config)
         // * 如果当前请求不需要显示 loading,在api服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading，参见loginApi
         config.headers!.noLoading || showFullScreenLoading()
-        const token: string = globalStore.token
+        // const token: string = globalStore.token;
         if (!globalStore.token) {
           return { ...config }
         }
-        return { ...config, headers: { Authorization: `Bearer ${globalStore.token}` } }
+        return {
+          ...config,
+          headers: { Authorization: `Bearer ${globalStore.token}` }
+        }
         // return { ...config, headers: { BEARER_TOKEN: token } }
       },
       (error: AxiosError) => {
@@ -71,13 +74,13 @@ class RequestHttp {
      */
     this.service.interceptors.response.use(
       (response: AxiosResponse) => {
-        const { data, config } = response
+        const { data } = response
         const globalStore = GlobalStore()
         // * 在请求结束后，移除本次请求
         // axiosCanceler.removePending(config)
         tryHideFullScreenLoading()
         // * 登陆失效（code == 2）
-        if (data.code == ResultEnum.OVERDUE) {
+        if (data.code === ResultEnum.OVERDUE) {
           ElMessage.error(data.message)
           globalStore.setToken('')
           router.replace({

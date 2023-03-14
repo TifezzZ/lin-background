@@ -65,7 +65,7 @@ export function tagsToList(tags: string) {
  */
 export function setEmptyMsg(obj) {
   const copy = cloneDeep(obj)
-  for (let i in copy) {
+  for (const i in copy) {
     if (!copy[i]) {
       copy[i] = EMPTYMSG
     }
@@ -95,19 +95,19 @@ export function print(printDiv) {
   })
   const downPdf = document.getElementById(printDiv)
   html2canvas(downPdf).then((canvas) => {
-    var contentWidth = canvas.width
-    var contentHeight = canvas.height
+    const contentWidth = canvas.width
+    const contentHeight = canvas.height
     //一页pdf显示html页面生成的canvas高度;
-    var pageHeight = (contentWidth / 595.28) * 841.89
+    const pageHeight = (contentWidth / 595.28) * 841.89
     //未生成pdf的html页面高度
-    var leftHeight = contentHeight
+    let leftHeight = contentHeight
     //pdf页面偏移
-    var position = 0
+    let position = 0
     //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
-    var imgWidth = 555.28
-    var imgHeight = (555.28 / contentWidth) * contentHeight
-    var pageData = canvas.toDataURL('image/jpeg', 1.0)
-    var pdf = new jsPDF(null, 'pt', 'a4')
+    const imgWidth = 555.28
+    const imgHeight = (555.28 / contentWidth) * contentHeight
+    const pageData = canvas.toDataURL('image/jpeg', 1.0)
+    const pdf = new jsPDF(null, 'pt', 'a4')
     //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
     //当内容未超过pdf一页显示的范围，无需分页
     if (leftHeight < pageHeight) {
@@ -170,7 +170,7 @@ export function onceCall(fun: Function): Function {
   return function () {
     if (flag) {
       flag = false
-      let args = arguments
+      const args = arguments
       fun.apply(this, args).finally(() => {
         flag = true
       })
@@ -184,8 +184,8 @@ export function onceCall(fun: Function): Function {
  * @return {*} 返回图片的绝对路径
  */
 export function loadPicture(imgUrl) {
-  let pathnameArr = location.pathname.split('/')
-  let realPathArr = []
+  const pathnameArr = location.pathname.split('/')
+  const realPathArr = []
   pathnameArr.forEach((item) => {
     if (item && item.slice(-5) !== '.html') {
       realPathArr.push(item)
