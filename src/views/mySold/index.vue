@@ -1,7 +1,7 @@
 <!--
  * @Author: yujingbo
  * @Date: 2023-03
- * @LastEditors: TifezzZ
+ * @LastEditors: yujingbo
  * @LastEditTime: 2023-03
  * @Description: my account data change
 -->
@@ -37,7 +37,43 @@
       />
       <el-table-column
         prop="name"
-        label="数据名称"
+        label="交易状态"
+        width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="name"
+        label="产品状态"
+        width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="name"
+        label="产品图片"
+        width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="name"
+        label="产品名称"
+        width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="name"
+        label="实收款"
+        width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="name"
+        label="用户头像"
+        width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="name"
+        label="用户昵称"
         width="120"
         show-overflow-tooltip
       />
@@ -69,6 +105,13 @@
       :pageable="pageable"
       :handle-size-change="handleSizeChange"
       :handle-current-change="handleCurrentChange"
+    />
+    <!-- 图片预览组件 -->
+    <el-image-viewer
+      v-if="showViewer"
+      :initial-index="imgViewerInitial"
+      @close="showViewer = false"
+      :url-list="viewerUrlList"
     />
     <viewAddEdit
       ref="viewAddEditRef"
@@ -110,6 +153,20 @@ const operate = (val, row, event) => {
   }
   func[val](row)
 }
+// 证明材料预览
+const showViewer = ref(false)
+const imgViewerInitial = ref(0)
+const viewerUrlList = ref(<string[]>[])
+const api = import.meta.env.VITE_API_URL
+function showEvidence(type: string, evidences: any[], startIndex: number) {
+  viewerUrlList.value = []
+  for (let i = 0; i < evidences.length; i++) {
+    viewerUrlList.value.push(`${api}/report/evidenceFile?filepath=${evidences[i].uuid}&token=Bearer globalStore.token`)
+  }
+  imgViewerInitial.value = startIndex
+  showViewer.value = true
+}
+// 初始数据获取
 function init() {
   // get initial form data
   getTableList()
