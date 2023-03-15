@@ -1,7 +1,7 @@
 <!--
  * @Author: yujingbo
  * @Date: 2023-03
- * @LastEditors: yujingbo
+ * @LastEditors: TifezzZ
  * @LastEditTime: 2023-03
  * @Description: my account data change
 -->
@@ -17,7 +17,7 @@
       <div class="header-button-lf">
         <el-button
           type="primary"
-          @click="viewAddEditRef.openDialog()"
+          @click="openDialog('新增')"
         >
           导入数据
         </el-button>
@@ -113,10 +113,7 @@
       @close="showViewer = false"
       :url-list="viewerUrlList"
     />
-    <viewAddEdit
-      ref="viewAddEditRef"
-      :row="dialogType"
-    />
+    <viewAddEdit ref="viewAddEditRef" />
   </div>
 </template>
 
@@ -124,7 +121,7 @@
 import { ref } from 'vue'
 import baseSearch from '@/components/Search/baseSearch.vue'
 import Pagination from '@/components/Table/Pagination.vue'
-import { getSoldData, deleteSold } from '@/api/modules/mySold'
+import { getSoldData, deleteSold, addMySold, editMysold } from '@/api/modules/mySold'
 import { useHandleData } from '@/hooks/useHandleData'
 import { useTable } from '@/hooks/useTable'
 import viewAddEdit from './components/view-add-edit.vue'
@@ -138,10 +135,9 @@ async function deleteData(row) {
   await useHandleData(deleteSold, row.id, message)
   getTableList()
 }
-const viewAddEditRef = ref()
-const dialogType = ref('add')
+
 function editData(row) {
-  viewAddEditRef.value.openDialog(row)
+  openDialog('编辑', row)
 }
 const operate = (val, row, event) => {
   if (event) {
@@ -153,18 +149,30 @@ const operate = (val, row, event) => {
   }
   func[val](row)
 }
-// 证明材料预览
+// 展示图片
 const showViewer = ref(false)
 const imgViewerInitial = ref(0)
 const viewerUrlList = ref(<string[]>[])
 const api = import.meta.env.VITE_API_URL
-function showEvidence(type: string, evidences: any[], startIndex: number) {
+function showImgs(type: string, evidences: any[], startIndex: number) {
   viewerUrlList.value = []
   for (let i = 0; i < evidences.length; i++) {
     viewerUrlList.value.push(`${api}/report/evidenceFile?filepath=${evidences[i].uuid}&token=Bearer globalStore.token`)
   }
   imgViewerInitial.value = startIndex
   showViewer.value = true
+}
+// 展示dialog 新增 编辑
+const viewAddEditRef = ref()
+const openDialog = (title: string, rowData = {}) => {
+  const params = {
+    title,
+    isView: title === '查看',
+    rowData: { ...rowData },
+    api: title === '新增' ? addMySold : title === '编辑' ? editMysold : undefined,
+    getTableList: getSoldData
+  }
+  viewAddEditRef.value?.acceptParams(params)
 }
 // 初始数据获取
 function init() {

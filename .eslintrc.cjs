@@ -1,7 +1,7 @@
 /*
  * @Author: yujingbo
  * @Date: 2023-03
- * @LastEditors: yujingbo
+ * @LastEditors: TifezzZ
  * @LastEditTime: 2023-03
  * @Description:
  */
@@ -37,7 +37,7 @@ module.exports = {
     // 强制块语句的最大可嵌套深度
     "max-depth": ["error", 3],
     // 限制函数定义中最大参数个数
-    "max-params": ["error", 3],
+    "max-params": ["error", 5],
     // 强制回调函数最大嵌套深度
     "max-nested-callbacks": [1, 3],
     // 强制文件的最大行数

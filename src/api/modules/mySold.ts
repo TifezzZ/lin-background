@@ -19,3 +19,15 @@ export const getSoldData = (params) => {
 export const deleteSold = (params) => {
   return http.post<string>(``, params)
 }
+/**
+ * @name 新增卖出数据
+ */
+export const addMySold = (params) => {
+  return http.post<string>(``, params)
+}
+/**
+ * @name 编辑卖出数据
+ */
+export const editMysold = (params) => {
+  return http.post<string>(``, params)
+}

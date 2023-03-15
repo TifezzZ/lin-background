@@ -1,7 +1,7 @@
 /*
  * @Author: yujingbo
  * @Date: 2022-11
- * @LastEditors: yujingbo
+ * @LastEditors: TifezzZ
  * @LastEditTime: 2023-03
  * @Description:通用接口
  */
@@ -44,4 +44,12 @@ export const UploadApi = (type: string, params) => {
 //
 export const test = () => {
   return http.post(``)
+}
+/**
+ * @name 图片上传
+ * @param params
+ * @returns
+ */
+export const uploadImg = (params: FormData) => {
+  return http.post<any>(``, params)
 }
