@@ -16,7 +16,7 @@
     >
       <template v-if="imageUrl">
         <img
-          :src="imageUrl"
+          :src="`/api/xianYu_tbs/${imageUrl}`"
           class="upload-image"
         />
         <div
@@ -38,14 +38,14 @@
             <el-icon><ZoomIn /></el-icon>
             <span>查看</span>
           </div>
-          <div
+          <!-- <div
             class="handle-icon"
             @click="deleteImg"
             v-if="!self_disabled"
           >
             <el-icon><Delete /></el-icon>
             <span>删除</span>
-          </div>
+          </div> -->
         </div>
       </template>
       <template v-else>
@@ -123,11 +123,11 @@ interface UploadEmits {
 const emit = defineEmits<UploadEmits>()
 const handleHttpUpload = async (options: UploadRequestOptions) => {
   const formData = new FormData()
-  formData.append('file', options.file)
+  formData.append('files', options.file)
   try {
     const api = props.api ?? uploadImg
     const { data } = await api(formData)
-    emit('update:imageUrl', data.fileUrl)
+    emit('update:imageUrl', data)
     // 调用 el-form 内部的校验方法（可自动校验）
     formItemContext?.prop && formContext?.validateField([formItemContext.prop as string])
   } catch (error) {

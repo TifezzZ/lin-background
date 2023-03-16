@@ -1,7 +1,7 @@
 /*
  * @Author: yujingbo
  * @Date: 2022-07
- * @LastEditors: yujingbo
+ * @LastEditors: TifezzZ
  * @LastEditTime: 2023-03
  * @Description:vite config
  */
@@ -29,10 +29,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       host: "0.0.0.0",
       proxy: {
         "/api": {
-          // target: 'http://100.100.60.106:8080',
-          // target: 'http://dev.juntong.ai:6130',
-          target: "http://jshield.juntong.ai:9606",
-          // target: 'http://ec2-52-81-58-210.cn-north-1.compute.amazonaws.com.cn:8081/',
+          target: "http://121.199.76.173:8088",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },

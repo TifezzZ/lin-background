@@ -16,7 +16,7 @@
         class="login-form"
       >
         <div class="login-logo">
-          <p class="logo-text">123</p>
+          <p class="logo-text">后管</p>
         </div>
         <LoginForm
           ref="loginRef"

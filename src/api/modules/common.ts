@@ -51,5 +51,5 @@ export const test = () => {
  * @returns
  */
 export const uploadImg = (params: FormData) => {
-  return http.post<any>(``, params)
+  return http.post<any>(`/xianYu_tbs/file/uploadPicturesCos`, params)
 }

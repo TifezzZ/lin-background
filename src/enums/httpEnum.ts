@@ -1,8 +1,8 @@
 /*
  * @Author: yujingbo
  * @Date: 2022-11
- * @LastEditors: yujingbo
- * @LastEditTime: 2023-02
+ * @LastEditors: TifezzZ
+ * @LastEditTime: 2023-03
  * @Description: hhtp相关枚举
  */
 // * 请求枚举配置
@@ -10,7 +10,7 @@
  * @description：请求配置
  */
 export enum ResultEnum {
-  SUCCESS = 0,
+  SUCCESS = '10000',
   PARAMETERERROR = 5,
   ERROR = 500,
   OVERDUE = 2,

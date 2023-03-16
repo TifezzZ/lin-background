@@ -1,139 +1,226 @@
 <template>
-  <el-form
-    ref="loginFormRef"
-    :model="loginForm"
-    :rules="loginRules"
-    size="large"
-  >
-    <el-form-item prop="username">
-      <el-input
-        v-model="loginForm.username"
-        placeholder="请输入账号"
-      >
-        <template #prefix>
-          <el-icon class="el-input__icon"><user /></el-icon>
-        </template>
-      </el-input>
-    </el-form-item>
-    <el-form-item prop="password">
-      <el-input
-        v-model="loginForm.password"
-        type="password"
-        placeholder="请输入登录密码"
-        show-password
-        autocomplete="new-password"
-      >
-        <template #prefix>
-          <el-icon class="el-input__icon"><lock /></el-icon>
-        </template>
-      </el-input>
-    </el-form-item>
-  </el-form>
-  <div class="login-btn">
-    <!-- @click="login(loginFormRef)" -->
-    <el-button
-      icon="UserFilled"
-      round
+  <div v-show="showItem === 'login'">
+    <el-form
+      ref="loginFormRef"
+      :model="loginForm"
+      :rules="loginRules"
       size="large"
-      type="primary"
-      :loading="loading"
-      @click="login(loginFormRef)"
     >
-      立即登录
-    </el-button>
+      <el-form-item prop="mobile">
+        <el-input
+          v-model="loginForm.mobile"
+          placeholder="请输入账号"
+        >
+          <template #prefix>
+            <el-icon class="el-input__icon"><user /></el-icon>
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item prop="pwd">
+        <el-input
+          v-model="loginForm.pwd"
+          type="pwd"
+          placeholder="请输入登录密码"
+          show-pwd
+          autocomplete="new-pwd"
+        >
+          <template #prefix>
+            <el-icon class="el-input__icon"><lock /></el-icon>
+          </template>
+        </el-input>
+      </el-form-item>
+    </el-form>
+    <div class="login-btn">
+      <el-button
+        round
+        size="large"
+        :loading="loading"
+        @click="showItem = 'register'"
+      >
+        注册
+      </el-button>
+      <el-button
+        round
+        size="large"
+        type="primary"
+        :loading="loading"
+        @click="login(loginFormRef)"
+      >
+        立即登录
+      </el-button>
+    </div>
+  </div>
+  <div v-show="showItem === 'register'">
+    <el-form
+      ref="registerFormRef"
+      :model="registerForm"
+      :rules="registerRules"
+      size="large"
+    >
+      <el-form-item prop="mobile">
+        <el-input
+          v-model="registerForm.mobile"
+          placeholder="请输入手机号"
+        >
+          <template #prefix>
+            <el-icon class="el-input__icon"><user /></el-icon>
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item prop="pwd">
+        <el-input
+          v-model="registerForm.pwd"
+          type="pwd"
+          placeholder="请输入登录密码"
+          show-pwd
+          autocomplete="new-pwd"
+        >
+          <template #prefix>
+            <el-icon class="el-input__icon"><lock /></el-icon>
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item prop="nickname">
+        <el-input
+          v-model="registerForm.nickname"
+          placeholder="请输入昵称"
+        >
+          <template #prefix>
+            <el-icon class="el-input__icon"><user /></el-icon>
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item
+        prop="avatar"
+        label="用户头像"
+      >
+        <UploadImg
+          v-model:imageUrl="registerForm.avatar"
+          width="135px"
+          height="135px"
+          :file-size="3"
+        >
+          <template #empty>
+            <el-icon><Avatar /></el-icon>
+            <span>请上传头像</span>
+          </template>
+        </UploadImg>
+      </el-form-item>
+    </el-form>
+    <div class="login-btn">
+      <el-button
+        round
+        size="large"
+        :loading="loading"
+        @click="showItem = 'login'"
+      >
+        返回登陆
+      </el-button>
+      <el-button
+        round
+        size="large"
+        type="primary"
+        :loading="loading"
+        @click="register(registerFormRef)"
+      >
+        注册
+      </el-button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onBeforeMount } from 'vue'
+import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import type { ElForm } from 'element-plus'
 import { ElMessage } from 'element-plus'
 // import { signin } from '@/api/restful/common'
 // import md5 from 'js-md5'
 import { GlobalStore } from '@/store'
-import { loginApi } from '@/api/modules/login'
+import { loginApi, registerApi } from '@/api/modules/login'
+import UploadImg from '@/components/Upload/Img.vue'
 
 const globalStore = GlobalStore()
-const ResetPasswordRef = ref()
+const loading = ref<boolean>(false)
+const router = useRouter()
+// login
 // 定义 formRef（校验规则）
 type FormInstance = InstanceType<typeof ElForm>
 const loginFormRef = ref<FormInstance>()
 const loginRules = reactive({
-  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+  mobile: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  pwd: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 })
 
 // 登录表单数据
 const loginForm = reactive({
-  username: '',
-  password: '',
-  code: ''
+  mobile: '',
+  pwd: ''
 })
-const verificationCode = reactive({
-  uuid: '',
-  img: ''
-})
-const emit = defineEmits(['setShowTab'])
-const setTab = (val) => {
-  emit('setShowTab', val)
-}
-const loading = ref<boolean>(false)
-const router = useRouter()
-
-// login
+const showItem = ref('login')
 const login = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate(async (valid) => {
     if (valid) {
       loading.value = true
       const data = {
-        username: loginForm.username,
-        password: loginForm.password,
-        code: loginForm.code,
-        uuid: verificationCode.uuid
+        mobile: loginForm.mobile,
+        pwd: loginForm.pwd
       }
-      router.push({ name: 'myAccount' })
-      // loginApi(data)
-      //   .then((res) => {
-      //     console.log(res);
-      //     // 存储 token
-      //     globalStore.token = res.data;
-      //     globalStore.userInfo = loginForm.username;
-      //     // localStorage.setItem('userName', loginForm.username)
-      //     // store.userName = res.data.username
-      //     router.push({ name: "dataset" });
-      //   })
-      //   .catch(() => {
-      //     ElMessage.error("输入信息有误请检查！");
-      //   })
-      //   .finally(() => {
-      //     loading.value = false;
-      //   });
+      loginApi(data)
+        .then(() => {
+          router.push({ name: 'myAccount' })
+        })
+        .catch(() => {
+          ElMessage.error('输入信息有误请检查！')
+        })
+        .finally(() => {
+          loading.value = false
+        })
     }
   })
 }
 
-onMounted(() => {
-  // 监听enter事件（调用登录）
-  document.onkeydown = (e: any) => {
-    e = window.event || e
-    if (e.code === 'Enter' || e.code === 'enter') {
-      if (loading.value) return
-      login(loginFormRef.value)
+// register
+const registerFormRef = ref<FormInstance>()
+const registerRules = reactive({
+  mobile: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
+  pwd: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  nickname: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+  avatar: [{ required: true, message: '请上传', trigger: 'blur' }]
+})
+// 注册表单数据
+const registerForm = reactive({
+  mobile: '',
+  pwd: '',
+  nickname: '',
+  avatar: ''
+})
+function register(formEl: FormInstance | undefined) {
+  if (!formEl) return
+  formEl.validate(async (valid) => {
+    if (valid) {
+      loading.value = true
+      const data = {
+        mobile: registerForm.mobile,
+        pwd: registerForm.pwd,
+        nickname: registerForm.nickname,
+        picture: registerForm.avatar
+      }
+      registerApi(data)
+        .then(() => {
+          ElMessage.success('注册成功！')
+          showItem.value = 'login'
+        })
+        .catch(() => {
+          ElMessage.error('输入信息有误请检查！')
+        })
+        .finally(() => {
+          loading.value = false
+        })
     }
-  }
-})
-
-// 子组件数据暴露给父组件
-const count = ref<number>(1)
-const consoleNumber = (name: string): void => {
-  console.log('我是子组件打印的数据', name)
+  })
 }
-defineExpose({
-  count,
-  consoleNumber
-})
 </script>
 
 <style scoped lang="scss">

@@ -1,7 +1,7 @@
 /*
  * @Author: yujingbo
  * @Date: 2022-11
- * @LastEditors: yujingbo
+ * @LastEditors: TifezzZ
  * @LastEditTime: 2023-03
  * @Description:
  */
@@ -27,7 +27,7 @@ const axiosCanceler = new AxiosCanceler()
 
 const config = {
   // 默认地址请求地址，可在 .env 开头文件中修改
-  baseURL: import.meta.env.VITE_API_URL as string,
+  baseURL: '/api',
   // 设置超时时间（10s）
   timeout: ResultEnum.TIMEOUT as number,
   // 跨域时候允许携带凭证
@@ -75,22 +75,22 @@ class RequestHttp {
     this.service.interceptors.response.use(
       (response: AxiosResponse) => {
         const { data } = response
-        const globalStore = GlobalStore()
+        // const globalStore = GlobalStore()
         // * 在请求结束后，移除本次请求
         // axiosCanceler.removePending(config)
         tryHideFullScreenLoading()
         // * 登陆失效（code == 2）
-        if (data.code === ResultEnum.OVERDUE) {
-          ElMessage.error(data.message)
-          globalStore.setToken('')
-          router.replace({
-            path: '/login'
-          })
-          return Promise.reject(data)
-        }
+        // if (data.code === ResultEnum.OVERDUE) {
+        //   ElMessage.error(data.message)
+        //   globalStore.setToken('')
+        //   router.replace({
+        //     path: '/login'
+        //   })
+        //   return Promise.reject(data)
+        // }
         // * 全局错误信息拦截（防止下载文件得时候返回数据流，直接报错）
         if (data.code !== ResultEnum.SUCCESS) {
-          if (data.code === ResultEnum.PARAMETERERROR) ElMessage.error(data[0].message)
+          // if (data.code === ResultEnum.PARAMETERERROR) ElMessage.error(data[0].message)
           return Promise.reject(data)
         }
         // * 成功请求
