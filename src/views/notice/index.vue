@@ -1,7 +1,7 @@
 <!--
  * @Author: yujingbo
  * @Date: 2023-03
- * @LastEditors: TifezzZ
+ * @LastEditors: yujingbo
  * @LastEditTime: 2023-03
  * @Description: notice data change
 -->
@@ -22,14 +22,14 @@
           type="textarea"
         />
       </el-form-item>
-      <el-form-item label="通知消息日期">
+      <!-- <el-form-item label="通知消息日期">
         <el-date-picker
           v-model="notificationDate"
           type="date"
           placeholder="选择一天"
           value-format="YYYY-MM-DD"
         />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="互动消息内容">
         <el-input
           v-model="form.interactiveMessage"
@@ -37,14 +37,14 @@
           type="textarea"
         />
       </el-form-item>
-      <el-form-item label="互动消息日期">
+      <!-- <el-form-item label="互动消息日期">
         <el-date-picker
           v-model="interactiveDate"
           type="date"
           placeholder="选择一天"
           value-format="YYYY-MM-DD"
         />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
         <el-button
           type="primary"
@@ -62,9 +62,9 @@ import { reactive } from 'vue'
 
 const form = reactive({
   notificationMessage: '',
-  notificationDate: undefined,
-  interactiveMessage: '',
-  interactiveDate: undefined
+  // notificationDate: undefined,
+  interactiveMessage: ''
+  // interactiveDate: undefined
 })
 function onSubmit() {
   // submit changes

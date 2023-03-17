@@ -15,8 +15,8 @@ export const GlobalStore = defineStore({
   state: () => ({
     // token
     token: '',
-    // userInfo
-    userInfo: ''
+    // mobile
+    mobile: ''
   }),
   getters: {},
   actions: {
@@ -24,9 +24,9 @@ export const GlobalStore = defineStore({
     setToken(token: string) {
       this.token = token
     },
-    // setUserInfo
-    setUserInfo(userInfo: any) {
-      this.userInfo = userInfo
+    // setmobile
+    setMobile(mobile: any) {
+      this.mobile = mobile
     }
   }
 })

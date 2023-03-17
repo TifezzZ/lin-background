@@ -128,11 +128,11 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import type { ElForm } from 'element-plus'
 import { ElMessage } from 'element-plus'
-// import { GlobalStore } from '@/store'
+import { GlobalStore } from '@/store'
 import { loginApi, registerApi } from '@/api/modules/login'
 import UploadImg from '@/components/Upload/Img.vue'
 
-// const globalStore = GlobalStore()
+const globalStore = GlobalStore()
 const loading = ref<boolean>(false)
 const router = useRouter()
 // login
@@ -161,6 +161,7 @@ const login = (formEl: FormInstance | undefined) => {
       }
       loginApi(data)
         .then(() => {
+          globalStore.setMobile(loginForm.mobile)
           router.push({ name: 'myAccount' })
         })
         .catch(() => {

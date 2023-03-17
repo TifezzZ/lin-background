@@ -12,12 +12,12 @@ import http from '@/api'
  * @name 登陆
  */
 export const loginApi = (params: Login.ReqLoginForm) => {
-  return http.post<string>(`/xianYu_tbs/user/login`, params)
+  return http.post<any>(`/xianYu_tbs/user/login`, params)
 }
 
 /**
  * @name 注册
  */
 export const registerApi = (params: Login.RegisterForm) => {
-  return http.post<string>(`/xianYu_tbs/user/register`, params)
+  return http.post<any>(`/xianYu_tbs/user/register`, params)
 }
