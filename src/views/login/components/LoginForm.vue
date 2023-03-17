@@ -61,11 +61,7 @@
         <el-input
           v-model="registerForm.mobile"
           placeholder="请输入手机号"
-        >
-          <template #prefix>
-            <el-icon class="el-input__icon"><user /></el-icon>
-          </template>
-        </el-input>
+        />
       </el-form-item>
       <el-form-item prop="pwd">
         <el-input
@@ -74,21 +70,19 @@
           placeholder="请输入登录密码"
           show-pwd
           autocomplete="new-pwd"
-        >
-          <template #prefix>
-            <el-icon class="el-input__icon"><lock /></el-icon>
-          </template>
-        </el-input>
+        />
+      </el-form-item>
+      <el-form-item prop="username">
+        <el-input
+          v-model="registerForm.username"
+          placeholder="请输入昵称"
+        />
       </el-form-item>
       <el-form-item prop="nickname">
         <el-input
           v-model="registerForm.nickname"
           placeholder="请输入昵称"
-        >
-          <template #prefix>
-            <el-icon class="el-input__icon"><user /></el-icon>
-          </template>
-        </el-input>
+        />
       </el-form-item>
       <el-form-item
         prop="avatar"
@@ -134,13 +128,11 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import type { ElForm } from 'element-plus'
 import { ElMessage } from 'element-plus'
-// import { signin } from '@/api/restful/common'
-// import md5 from 'js-md5'
-import { GlobalStore } from '@/store'
+// import { GlobalStore } from '@/store'
 import { loginApi, registerApi } from '@/api/modules/login'
 import UploadImg from '@/components/Upload/Img.vue'
 
-const globalStore = GlobalStore()
+// const globalStore = GlobalStore()
 const loading = ref<boolean>(false)
 const router = useRouter()
 // login
@@ -186,6 +178,7 @@ const registerFormRef = ref<FormInstance>()
 const registerRules = reactive({
   mobile: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
   pwd: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  username: [{ required: true, message: '请输入账号名称', trigger: 'blur' }],
   nickname: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
   avatar: [{ required: true, message: '请上传', trigger: 'blur' }]
 })
@@ -193,6 +186,7 @@ const registerRules = reactive({
 const registerForm = reactive({
   mobile: '',
   pwd: '',
+  username: '',
   nickname: '',
   avatar: ''
 })
@@ -204,6 +198,7 @@ function register(formEl: FormInstance | undefined) {
       const data = {
         mobile: registerForm.mobile,
         pwd: registerForm.pwd,
+        username: registerForm.username,
         nickname: registerForm.nickname,
         picture: registerForm.avatar
       }

@@ -1,16 +1,13 @@
 <!--
  * @Author: yujingbo
  * @Date: 2023-03
- * @LastEditors: TifezzZ
+ * @LastEditors: yujingbo
  * @LastEditTime: 2023-03
  * @Description: 登录页面
 -->
 <template>
   <div class="login-container flx-center">
     <div class="login-box">
-      <!-- <div class="login-left">
-        <img src="@/assets/images/login_left0.png" alt="login" />
-      </div> -->
       <div
         v-if="showTab === 'login'"
         class="login-form"

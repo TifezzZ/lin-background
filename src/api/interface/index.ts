@@ -1,7 +1,7 @@
 /*
  * @Author: yujingbo
  * @Date: 2022-11
- * @LastEditors: TifezzZ
+ * @LastEditors: yujingbo
  * @LastEditTime: 2023-03
  * @Description:
  */
@@ -37,6 +37,7 @@ export interface ReqPage {
 // * 登录
 export namespace Login {
   export interface RegisterForm extends ReqLoginForm {
+    username: string
     nickname: string
     picture: string
   }
