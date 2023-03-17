@@ -1,7 +1,7 @@
 /*
  * @Author: yujingbo
  * @Date: 2023-03
- * @LastEditors: yujingbo
+ * @LastEditors: TifezzZ
  * @LastEditTime: 2023-03
  * @Description:
  */
@@ -11,6 +11,7 @@ import router from './routers'
 import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import '@/styles/reset.scss'
 // CSS common style sheet
@@ -22,6 +23,7 @@ const app = createApp({
   render: () => h(App)
 })
 const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }

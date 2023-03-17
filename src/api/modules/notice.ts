@@ -1,7 +1,7 @@
 /*
  * @Author: yujingbo
  * @Date: 2022-11
- * @LastEditors: yujingbo
+ * @LastEditors: TifezzZ
  * @LastEditTime: 2023-03
  * @Description:
  */
@@ -18,4 +18,10 @@ export const getNotice = (params: Notice.GetNotice) => {
  */
 export const editNotice = (params: Notice.EditNotice) => {
   return http.post<any>(`/xianYu_tbs/msg/updateMsgPara`, params)
+}
+/**
+ * @name 新增系统消息
+ */
+export const addNotice = (params: Notice.EditNotice) => {
+  return http.post<any>(`/xianYu_tbs/msg/setMsgPara`, params)
 }

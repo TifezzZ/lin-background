@@ -125,9 +125,11 @@ import { getSoldData, deleteSold, addMySold, editMysold } from '@/api/modules/my
 import { useHandleData } from '@/hooks/useHandleData'
 import { useTable } from '@/hooks/useTable'
 import viewAddEdit from './components/view-add-edit.vue'
+import { GlobalStore } from '@/store'
+const globalStore = GlobalStore()
 
 const { tableData, pageable, searchParam, search, reset, handleSizeChange, handleCurrentChange, getTableList, typeIndex } =
-  useTable(getSoldData, {}, true)
+  useTable(getSoldData, { mobile: globalStore.mobile }, true)
 const optionItem = ['编辑', '删除']
 async function deleteData(row) {
   // 成功和失败的状态
@@ -170,16 +172,16 @@ const openDialog = (title: string, rowData = {}) => {
     isView: title === '查看',
     rowData: { ...rowData },
     api: title === '新增' ? addMySold : title === '编辑' ? editMysold : undefined,
-    getTableList: getSoldData
+    getTableList: getTableList
   }
   viewAddEditRef.value?.acceptParams(params)
 }
 // 初始数据获取
-function init() {
-  // get initial form data
-  getTableList()
-}
-init()
+// function init() {
+//   // get initial form data
+//   getTableList()
+// }
+// init()
 </script>
 
 <style lang="scss" scoped></style>

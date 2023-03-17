@@ -1,7 +1,7 @@
 <!--
  * @Author: yujingbo
  * @Date: 2023-03
- * @LastEditors: yujingbo
+ * @LastEditors: TifezzZ
  * @LastEditTime: 2023-03
  * @Description: notice data change
 -->
@@ -32,7 +32,7 @@
       </el-form-item> -->
       <el-form-item label="互动消息内容">
         <el-input
-          v-model="form.interactiveMessage"
+          v-model="form.interactiveMessages"
           :rows="3"
           type="textarea"
         />
@@ -58,19 +58,34 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive, toRaw } from 'vue'
+import { getNotice, editNotice } from '@/api/modules/notice'
+import { ElMessage } from 'element-plus'
+import { GlobalStore } from '@/store'
+const globalStore = GlobalStore()
 
 const form = reactive({
   notificationMessage: '',
   // notificationDate: undefined,
-  interactiveMessage: ''
+  interactiveMessages: '',
   // interactiveDate: undefined
+  mobile: globalStore.mobile
 })
 function onSubmit() {
   // submit changes
+  editNotice(toRaw(form)).then(() => {
+    ElMessage.success('修改成功！')
+  })
 }
 function init() {
   // get initial form data
+  getNotice({ mobile: globalStore.mobile }).then(({ data }) => {
+    for (const i in form) {
+      if (Object.prototype.hasOwnProperty.call(data, i)) {
+        form[i] = data[i]
+      }
+    }
+  })
 }
 init()
 </script>

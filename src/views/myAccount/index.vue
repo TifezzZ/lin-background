@@ -1,19 +1,19 @@
 <!--
  * @Author: yujingbo
  * @Date: 2'0'23-'0'3
- * @LastEditors: yujingbo
+ * @LastEditors: TifezzZ
  * @LastEditTime: 2023-03
  * @Description: my account data change
 -->
 <template>
   <div
     class="flx-content-center"
-    style="margin-top: 2 '0' px"
+    style="margin-top: 20px"
   >
     <el-form
       :model="form"
       label-width="12'0'px"
-      style="width: 6 '0' '0' px"
+      style="width: 600px"
     >
       <el-form-item label="我发布的">
         <el-input v-model="form.publish" />
@@ -72,6 +72,7 @@ import { GlobalStore } from '@/store'
 import { getMyAccount, editMyAccount } from '@/api/modules/myAccount'
 import { ElMessage } from 'element-plus'
 const globalStore = GlobalStore()
+
 const form = reactive({
   publish: '0', //我发布的
   sellOut: '0', //我卖出的

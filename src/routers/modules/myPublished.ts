@@ -17,7 +17,7 @@ const homeRouter: Array<RouteRecordRaw> = [
     meta: {
       keepAlive: true,
       requiresAuth: false,
-      title: '我发布的',
+      title: '擦亮曝光',
       key: 'myPublished',
       to: { name: 'myPublished' }
     },

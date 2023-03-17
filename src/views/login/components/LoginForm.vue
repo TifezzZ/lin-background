@@ -1,3 +1,10 @@
+<!--
+ * @Author: yujingbo
+ * @Date: 2023-03
+ * @LastEditors: TifezzZ
+ * @LastEditTime: 2023-03
+ * @Description: 登陆注册 TODO: 最好拆分一下 把登陆注册各自封装一个组件
+-->
 <template>
   <div v-show="showItem === 'login'">
     <el-form
@@ -130,6 +137,9 @@ import type { ElForm } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { GlobalStore } from '@/store'
 import { loginApi, registerApi } from '@/api/modules/login'
+import { addMyAccount } from '@/api/modules/myAccount'
+import { addNotice } from '@/api/modules/notice'
+import { addMyPublish } from '@/api/modules/myPublish'
 import UploadImg from '@/components/Upload/Img.vue'
 
 const globalStore = GlobalStore()
@@ -205,11 +215,42 @@ function register(formEl: FormInstance | undefined) {
       }
       registerApi(data)
         .then(() => {
+          // 初始化用户数据
+          const myAccount = {
+            publish: '0', //我发布的
+            sellOut: '0', //我卖出的
+            earnMoney: '0', //在闲鱼赚的钱
+            collect: '0', //收藏数量
+            historyBrowsing: '0', //历史浏览
+            interest: '0', //关注数量
+            fans: '0', //粉丝数量
+            invitation: '0', //帖子数量
+            views: '0', //昨日宝贝浏览量
+            accountViews: '0', //昨日闲鱼号浏览量
+            addFans: '0', //昨日新增粉丝
+            fansViews: '0', //昨日粉丝浏览
+            buy: '0', //我买到的
+            mobile: registerForm.mobile //联系方式
+          }
+          const myPublish = {
+            mobile: registerForm.mobile,
+            viewsNum: '0', //近日曝光量
+            shineNum: '0', //近期擦亮次数
+            shine: '0' //是否擦亮 0-未擦亮 1-擦亮
+          }
+          const notice = {
+            mobile: registerForm.mobile, //当前登陆账号
+            notificationMessage: '', //通知消息
+            interactiveMessages: '' //互动消息
+          }
+          return Promise.all([addMyAccount(myAccount), addMyPublish(myPublish), addNotice(notice)])
+        })
+        .then(() => {
           ElMessage.success('注册成功！')
           showItem.value = 'login'
         })
         .catch(() => {
-          ElMessage.error('输入信息有误请检查！')
+          ElMessage.error('注册失败，请联系管理员')
         })
         .finally(() => {
           loading.value = false

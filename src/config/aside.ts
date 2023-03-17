@@ -1,7 +1,7 @@
 /*
  * @Author: yujingbo
  * @Date: 2022-11
- * @LastEditors: yujingbo
+ * @LastEditors: TifezzZ
  * @LastEditTime: 2023-03
  * @Description:左侧菜单栏配置
  */
@@ -30,7 +30,7 @@ export default [
     component: '/myPublished/index',
     meta: {
       icon: '',
-      title: '我发布的'
+      title: '擦亮曝光'
     }
   },
   {

@@ -21,11 +21,11 @@ export const useTable = (
     // 分页数据
     pageable: {
       // 当前页数
-      page: 1,
+      pageNum: 1,
       // 每页显示条数
-      size: 20,
+      pageSize: 10,
       // 总条数
-      totalElements: 0
+      totalNum: 0
     },
     // 查询参数(只包括查询)
     searchParam: <any>{},
@@ -41,8 +41,8 @@ export const useTable = (
   const pageParam = computed({
     get: () => {
       return {
-        page: state.pageable.page,
-        size: state.pageable.size
+        pageNum: state.pageable.pageNum,
+        pageSize: state.pageable.pageSize
       }
     },
     set: (newVal: any) => {
@@ -72,8 +72,8 @@ export const useTable = (
       state.tableData = isPageable ? data.content : data
       state.others = data.others
       // 解构后台返回的分页数据(如果有分页更新分页信息)
-      const { page, size, totalElements } = data
-      isPageable && updatePageable({ page, size, totalElements })
+      const { totalNum } = data
+      isPageable && updatePageable({ totalNum })
       isSuccess.value = true
     } catch (error) {
       // 判断请求是否成功
@@ -122,7 +122,7 @@ export const useTable = (
    * @return void
    * */
   const search = () => {
-    state.pageable.page = 1
+    state.pageable.pageNum = 1
     getTableList()
   }
 
@@ -131,7 +131,7 @@ export const useTable = (
    * @return void
    * */
   const reset = () => {
-    state.pageable.page = 1
+    state.pageable.pageNum = 1
     state.searchParam = {}
     // 重置搜索表单的时，如果有默认搜索参数，则重置默认的搜索参数
     Object.keys(state.initSearchParam).forEach((key) => {
@@ -146,8 +146,8 @@ export const useTable = (
    * @return void
    * */
   const handleSizeChange = (val: number) => {
-    state.pageable.page = 1
-    state.pageable.size = val
+    state.pageable.pageNum = 1
+    state.pageable.pageSize = val
     getTableList()
   }
 
@@ -157,7 +157,7 @@ export const useTable = (
    * @return void
    * */
   const handleCurrentChange = (val: number) => {
-    state.pageable.page = val
+    state.pageable.pageNum = val
     getTableList()
   }
   /**
@@ -166,7 +166,7 @@ export const useTable = (
    * @return number
    */
   function typeIndex(index) {
-    return index + (state.pageable.page - 1) * state.pageable.size + 1
+    return index + (state.pageable.pageNum - 1) * state.pageable.pageSize + 1
   }
   return {
     ...toRefs(state),
