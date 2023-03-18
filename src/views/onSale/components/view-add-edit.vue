@@ -3,7 +3,7 @@
  * @Date: 2023-03
  * @LastEditors: TifezzZ
  * @LastEditTime: 2023-03
- * @Description: 新增/编辑我卖出的
+ * @Description: 新增/编辑我在买的
 -->
 <template>
   <el-dialog
@@ -40,54 +40,29 @@
         </UploadImg>
       </el-form-item>
       <el-form-item
-        label="买家头像"
-        prop="buyerPicture"
+        label="产品价格"
+        prop="productPrice"
       >
-        <UploadImg
-          v-model:imageUrl="drawerProps.rowData!.buyerPicture"
-          width="135px"
-          height="135px"
-          :file-size="3"
-        >
-          <template #empty>
-            <el-icon><Avatar /></el-icon>
-            <span>请上传头像</span>
-          </template>
-        </UploadImg>
+        <el-input v-model="drawerProps.rowData.productPrice" />
       </el-form-item>
       <el-form-item
-        label="买家昵称"
-        prop="buyerNickname"
+        label="曝光量"
+        prop="viewsNum"
       >
-        <el-input v-model="drawerProps.rowData.buyerNickname" />
+        <el-input v-model="drawerProps.rowData.viewsNum" />
       </el-form-item>
       <el-form-item
-        label="实收款"
-        prop="actualCollection"
+        label="浏览量"
+        prop="views"
       >
-        <el-input v-model="drawerProps.rowData.actualCollection" />
+        <el-input v-model="drawerProps.rowData.views" />
       </el-form-item>
-      <!-- 0-交易成功 1-买家关闭了交易 2-退款成功 -->
+      <!-- 想要数量 -->
       <el-form-item
-        label="交易状态"
-        prop="sellStatus"
+        label="想要数量"
+        prop="want"
       >
-        <el-radio-group v-model="drawerProps.rowData.sellStatus">
-          <el-radio label="0">交易成功</el-radio>
-          <el-radio label="1">买家关闭了交易</el-radio>
-          <el-radio label="2">退款成功</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <!--  0-待付款 1-待发货 2-待收货 -->
-      <el-form-item
-        label="产品状态"
-        prop="productStatus"
-      >
-        <el-radio-group v-model="drawerProps.rowData.productStatus">
-          <el-radio label="0">待付款</el-radio>
-          <el-radio label="1">待发货</el-radio>
-          <el-radio label="2">待收货</el-radio>
-        </el-radio-group>
+        <el-input v-model="drawerProps.rowData.want" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -122,12 +97,12 @@ const dialogVisible = ref(false)
 
 // dialog data
 const rules = reactive({
-  productName: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
-  productPicture: [{ required: true, message: '请上传产品图片', trigger: 'blur' }],
-  buyerPicture: [{ required: true, message: '请上传买家头像', trigger: 'blur' }],
-  buyerNickname: [{ required: true, message: '请输入买家昵称', trigger: 'blur' }],
-  sellStatus: [{ required: true, message: '请输入交易状态', trigger: 'blur' }],
-  productStatus: [{ required: true, message: '请输入产品状态', trigger: 'blur' }]
+  productName: [{ required: true, message: '请输入商品名称', trigger: 'blur' }],
+  productPicture: [{ required: true, message: '请上传商品图片', trigger: 'blur' }],
+  productPrice: [{ required: true, message: '请输入产品价格', trigger: 'blur' }],
+  viewsNum: [{ required: true, message: '请输入曝光量', trigger: 'blur' }],
+  views: [{ required: true, message: '请输入浏览量', trigger: 'blur' }],
+  want: [{ required: true, message: '请输入想要数量', trigger: 'blur' }]
 })
 
 const drawerProps = ref<DialogProps>({

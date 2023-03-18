@@ -7,12 +7,12 @@
 -->
 <template>
   <div class="table-box padding_20">
-    <base-search
+    <!-- <base-search
       timeZoneName="导入完成时间"
       :search="search"
       :reset="reset"
       :searchParam="searchParam"
-    />
+    /> -->
     <div class="table-header">
       <div class="header-button-lf">
         <el-button
@@ -36,47 +36,61 @@
         show-overflow-tooltip
       />
       <el-table-column
-        prop="name"
+        prop="productName"
+        label="商品名称"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="productPicture"
+        label="商品图片"
+      >
+        <template #default="scope">
+          <img
+            @click="showImg(scope.row.productPicture)"
+            style="width: 80px; height: 80px"
+            :src="`/api/xianYu_tbs/${scope.row.productPicture}`"
+            alt=""
+          />
+        </template>
+      </el-table-column>
+      <el-table-column label="买家头像">
+        <template #default="scope">
+          <img
+            @click="showImg(scope.row.productPicture)"
+            style="width: 80px; height: 80px"
+            :src="`/api/xianYu_tbs/${scope.row.buyerPicture}`"
+            alt=""
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="buyerNickname"
+        label="买家昵称"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="actualCollection"
+        label="买家收款"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="sellStatus"
         label="交易状态"
-        width="120"
         show-overflow-tooltip
-      />
+      >
+        <template #default="scope">
+          {{ sellStatusType[scope.row.sellStatus] }}
+        </template>
+      </el-table-column>
       <el-table-column
-        prop="name"
+        prop="productStatus"
         label="产品状态"
-        width="120"
         show-overflow-tooltip
-      />
-      <el-table-column
-        prop="name"
-        label="产品图片"
-        width="120"
-        show-overflow-tooltip
-      />
-      <el-table-column
-        prop="name"
-        label="产品名称"
-        width="120"
-        show-overflow-tooltip
-      />
-      <el-table-column
-        prop="name"
-        label="实收款"
-        width="120"
-        show-overflow-tooltip
-      />
-      <el-table-column
-        prop="name"
-        label="用户头像"
-        width="120"
-        show-overflow-tooltip
-      />
-      <el-table-column
-        prop="name"
-        label="用户昵称"
-        width="120"
-        show-overflow-tooltip
-      />
+      >
+        <template #default="scope">
+          {{ productStatusType[scope.row.productStatus] }}
+        </template>
+      </el-table-column>
       <el-table-column
         label="操作"
         fixed="right"
@@ -155,12 +169,9 @@ const operate = (val, row, event) => {
 const showViewer = ref(false)
 const imgViewerInitial = ref(0)
 const viewerUrlList = ref(<string[]>[])
-const api = import.meta.env.VITE_API_URL
-function showImgs(type: string, evidences: any[], startIndex: number) {
+function showImg(imgUrl: string, startIndex = 0) {
   viewerUrlList.value = []
-  for (let i = 0; i < evidences.length; i++) {
-    viewerUrlList.value.push(`${api}/report/evidenceFile?filepath=${evidences[i].uuid}&token=Bearer globalStore.token`)
-  }
+  viewerUrlList.value.push(`/api/xianYu_tbs/${imgUrl}`)
   imgViewerInitial.value = startIndex
   showViewer.value = true
 }
@@ -176,6 +187,9 @@ const openDialog = (title: string, rowData = {}) => {
   }
   viewAddEditRef.value?.acceptParams(params)
 }
+// 交易状态 产品状态枚举
+const sellStatusType = ['交易成功', '买家关闭了交易', '退款成功']
+const productStatusType = ['待付款', '待发货', '待收货']
 // 初始数据获取
 // function init() {
 //   // get initial form data
@@ -183,5 +197,3 @@ const openDialog = (title: string, rowData = {}) => {
 // }
 // init()
 </script>
-
-<style lang="scss" scoped></style>

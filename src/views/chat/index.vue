@@ -6,132 +6,167 @@
  * @Description: my account data change
 -->
 <template>
-  <div
-    class="flx-content-center"
-    style="margin-top: 20px"
-  >
-    <el-form
-      :model="form"
-      label-width="120px"
-      style="width: 600px"
-    >
-      <el-form-item label="昵称">
-        <el-input v-model="form.nickName" />
-      </el-form-item>
-      <el-form-item label="会员名">
-        <el-input v-model="form.memberName" />
-      </el-form-item>
-      <el-form-item label="收藏">
-        <el-input-number
-          v-model="form.collectNumber"
-          :min="0"
-        />
-      </el-form-item>
-      <el-form-item label="历史浏览">
-        <el-input-number
-          v-model="form.historyBrowsing"
-          :min="0"
-        />
-      </el-form-item>
-      <el-form-item label="关注">
-        <el-input-number
-          v-model="form.concerns"
-          :min="0"
-        />
-      </el-form-item>
-      <el-form-item label="粉丝">
-        <el-input-number
-          v-model="form.fans"
-          :min="0"
-        />
-      </el-form-item>
-      <el-form-item label="帖子">
-        <el-input-number
-          v-model="form.cards"
-          :min="0"
-        />
-      </el-form-item>
-      <el-form-item label="昨日宝贝浏览量">
-        <el-input-number
-          v-model="form.yesterdayProductViews"
-          :min="0"
-        />
-      </el-form-item>
-      <el-form-item label="昨日闲鱼浏览量">
-        <el-input-number
-          v-model="form.yesterdayXianYuViews"
-          :min="0"
-        />
-      </el-form-item>
-      <el-form-item label="新增粉丝">
-        <el-input-number
-          v-model="form.addFans"
-          :min="0"
-        />
-      </el-form-item>
-      <el-form-item label="粉丝浏览">
-        <el-input-number
-          v-model="form.fansViews"
-          :min="0"
-        />
-      </el-form-item>
-      <el-form-item label="我发布的">
-        <el-input-number
-          v-model="form.published"
-          :min="0"
-        />
-      </el-form-item>
-      <el-form-item label="我卖出的">
-        <el-input-number
-          v-model="form.sold"
-          :min="0"
-        />
-      </el-form-item>
-      <el-form-item label="我买到的">
-        <el-input-number
-          v-model="form.bought"
-          :min="0"
-        />
-      </el-form-item>
-      <el-form-item>
+  <div class="table-box padding_20">
+    <!-- <base-search
+      timeZoneName="导入完成时间"
+      :search="search"
+      :reset="reset"
+      :searchParam="searchParam"
+    /> -->
+    <div class="table-header">
+      <div class="header-button-lf">
         <el-button
           type="primary"
-          @click="onSubmit"
+          @click="openDialog('新增')"
         >
-          确认
+          导入数据
         </el-button>
-      </el-form-item>
-    </el-form>
+      </div>
+    </div>
+    <el-table
+      ref="tableRef"
+      :data="tableData"
+      :border="true"
+    >
+      <el-table-column
+        type="index"
+        :index="typeIndex"
+        label="序号"
+        width="60"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="msg"
+        label="消息内容"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="productPicture"
+        label="商品图片"
+      >
+        <template #default="scope">
+          <img
+            @click="showImg(scope.row.productPicture)"
+            style="width: 80px; height: 80px"
+            :src="`/api/xianYu_tbs/${scope.row.productPicture}`"
+            alt=""
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="buyerNickname"
+        label="买家昵称"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="buyerPicture"
+        label="买家头像"
+      >
+        <template #default="scope">
+          <img
+            @click="showImg(scope.row.buyerPicture)"
+            style="width: 80px; height: 80px"
+            :src="`/api/xianYu_tbs/${scope.row.buyerPicture}`"
+            alt=""
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="操作"
+        fixed="right"
+        width="330"
+      >
+        <template #default="scope">
+          <el-button
+            v-for="item in optionItem"
+            :key="item"
+            type="primary"
+            link
+            @click="operate(item, scope.row, $event)"
+          >
+            {{ item }}
+          </el-button>
+        </template>
+      </el-table-column>
+      <template #empty>
+        <div class="table-empty">
+          <div>暂无数据</div>
+        </div>
+      </template>
+    </el-table>
+    <!-- 分页组件 -->
+    <Pagination
+      :pageable="pageable"
+      :handle-size-change="handleSizeChange"
+      :handle-current-change="handleCurrentChange"
+    />
+    <!-- 图片预览组件 -->
+    <el-image-viewer
+      v-if="showViewer"
+      :initial-index="imgViewerInitial"
+      @close="showViewer = false"
+      :url-list="viewerUrlList"
+    />
+    <viewAddEdit ref="viewAddEditRef" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { ref } from 'vue'
+import Pagination from '@/components/Table/Pagination.vue'
+import { getChatData, deleteChat, addChat, editChat } from '@/api/modules/chat'
+import { useHandleData } from '@/hooks/useHandleData'
+import { useTable } from '@/hooks/useTable'
+import viewAddEdit from './components/view-add-edit.vue'
+import { GlobalStore } from '@/store'
+const globalStore = GlobalStore()
 
-// 昵称/会员名/收藏/历史浏览/关注/粉丝/帖子/昨日宝贝浏览量/昨日闲鱼浏览量/新增粉丝/粉丝浏览/我发布的/我卖出的/我买到的
-const form = reactive({
-  nickName: '',
-  memberName: '',
-  collectNumber: 0,
-  historyBrowsing: 0,
-  concerns: 0,
-  fans: 0,
-  cards: 0,
-  yesterdayProductViews: 0,
-  yesterdayXianYuViews: 0,
-  addFans: 0,
-  fansViews: 0,
-  published: 0,
-  sold: 0,
-  bought: 0
-})
-function onSubmit() {
-  // submit changes
+const { tableData, pageable, handleSizeChange, handleCurrentChange, getTableList, typeIndex } = useTable(
+  getChatData,
+  { mobile: globalStore.mobile },
+  true
+)
+const optionItem = ['编辑', '删除']
+async function deleteData(row) {
+  // 成功和失败的状态
+  const message = '是否删除该数据？'
+  await useHandleData(deleteChat, row.id, message)
+  getTableList()
 }
-function init() {
-  // get initial form data
+
+function editData(row) {
+  openDialog('编辑', row)
 }
-init()
+const operate = (val, row, event) => {
+  if (event) {
+    event.currentTarget.blur()
+  }
+  const func = {
+    删除: deleteData,
+    编辑: editData
+  }
+  func[val](row)
+}
+// 展示图片
+const showViewer = ref(false)
+const imgViewerInitial = ref(0)
+const viewerUrlList = ref(<string[]>[])
+function showImg(imgUrl: string, startIndex = 0) {
+  viewerUrlList.value = []
+  viewerUrlList.value.push(`/api/xianYu_tbs/${imgUrl}`)
+  imgViewerInitial.value = startIndex
+  showViewer.value = true
+}
+// 展示dialog 新增 编辑
+const viewAddEditRef = ref()
+const openDialog = (title: string, rowData = {}) => {
+  const params = {
+    title,
+    isView: title === '查看',
+    rowData: { ...rowData },
+    api: title === '新增' ? addChat : title === '编辑' ? editChat : undefined,
+    getTableList: getTableList
+  }
+  viewAddEditRef.value?.acceptParams(params)
+}
 </script>
-
-<style lang="scss" scoped></style>

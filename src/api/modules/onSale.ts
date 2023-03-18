@@ -1,7 +1,7 @@
 /*
  * @Author: yujingbo
  * @Date: 2022-11
- * @LastEditors: yujingbo
+ * @LastEditors: TifezzZ
  * @LastEditTime: 2023-03
  * @Description:
  */
@@ -10,13 +10,13 @@ import { OnSale, ReqPage } from '@/api/interface'
 /**
  * @name 获取在售数据
  */
-export const getSoldData = (params: ReqPage) => {
+export const getSellData = (params: ReqPage) => {
   return http.post<any>(`/xianYu_tbs/publish/selectPublishPara`, params)
 }
 /**
  * @name 删除在售数据
  */
-export const deleteSold = (id: string) => {
+export const deleteSell = (id: string) => {
   return http.post<any>(`/xianYu_tbs/publish/delPublishPara`, { id })
 }
 /**
