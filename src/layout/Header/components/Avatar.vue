@@ -10,7 +10,7 @@
     <!-- <Avatar :alt="globalStore.userInfo" /> -->
     <div class="avatar">
       <img
-        :src="`/api/xianYu_tbs/${globalStore.userInfo.picture}`"
+        :src="`${api}/xianYu_tbs/${globalStore.userInfo.picture}`"
         alt="avatar"
       />
     </div>
@@ -32,7 +32,7 @@ import { ElMessageBox, ElMessage } from 'element-plus'
 import Avatar from '@/layout/Header/components/avatar-img/avatar-component.vue'
 import { useRouter } from 'vue-router'
 import { GlobalStore } from '@/store'
-
+const api = import.meta.env.VITE_API_URL
 const router = useRouter()
 const globalStore = GlobalStore()
 

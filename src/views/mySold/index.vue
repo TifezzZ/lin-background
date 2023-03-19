@@ -48,7 +48,7 @@
           <img
             @click="showImg(scope.row.productPicture)"
             style="width: 80px; height: 80px"
-            :src="`/api/xianYu_tbs/${scope.row.productPicture}`"
+            :src="`${api}/xianYu_tbs/${scope.row.productPicture}`"
             alt=""
           />
         </template>
@@ -58,7 +58,7 @@
           <img
             @click="showImg(scope.row.productPicture)"
             style="width: 80px; height: 80px"
-            :src="`/api/xianYu_tbs/${scope.row.buyerPicture}`"
+            :src="`${api}/xianYu_tbs/${scope.row.buyerPicture}`"
             alt=""
           />
         </template>
@@ -141,7 +141,7 @@ import { useTable } from '@/hooks/useTable'
 import viewAddEdit from './components/view-add-edit.vue'
 import { GlobalStore } from '@/store'
 const globalStore = GlobalStore()
-
+const api = import.meta.env.VITE_API_URL
 const { tableData, pageable, searchParam, search, reset, handleSizeChange, handleCurrentChange, getTableList, typeIndex } =
   useTable(getSoldData, { mobile: globalStore.mobile }, true)
 const optionItem = ['编辑', '删除']
@@ -171,7 +171,7 @@ const imgViewerInitial = ref(0)
 const viewerUrlList = ref(<string[]>[])
 function showImg(imgUrl: string, startIndex = 0) {
   viewerUrlList.value = []
-  viewerUrlList.value.push(`/api/xianYu_tbs/${imgUrl}`)
+  viewerUrlList.value.push(`${api}/xianYu_tbs/${imgUrl}`)
   imgViewerInitial.value = startIndex
   showViewer.value = true
 }

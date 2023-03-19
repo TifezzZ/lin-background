@@ -16,7 +16,7 @@
     >
       <template v-if="imageUrl">
         <img
-          :src="`/api/xianYu_tbs/${imageUrl}`"
+          :src="`${api}/xianYu_tbs/${imageUrl}`"
           class="upload-image"
         />
         <div
@@ -74,7 +74,7 @@ import { uploadImg } from '@/api/modules/common'
 import { generateUUID } from '@/utils/util'
 import { ElNotification, formContextKey, formItemContextKey } from 'element-plus'
 import type { UploadProps, UploadRequestOptions } from 'element-plus'
-
+const api = import.meta.env.VITE_API_URL
 interface UploadFileProps {
   imageUrl: string // 图片地址 ==> 必传
   api?: (params: any) => Promise<any> // 上传图片的 api 方法，一般项目上传都是同一个 api 方法，在组件里直接引入即可 ==> 非必传
