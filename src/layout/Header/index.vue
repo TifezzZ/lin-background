@@ -1,8 +1,8 @@
 <!--
  * @Author: yujingbo
  * @Date: 2022-11
- * @LastEditors: yujingbo
- * @LastEditTime: 2023-01
+ * @LastEditors: TifezzZ
+ * @LastEditTime: 2023-03
  * @Description: 
 -->
 <template>
@@ -12,7 +12,7 @@
     </div>
     <div class="header-ri flx-center">
       <!-- User name -->
-      <span class="username">{{ globalStore.userInfo }}</span>
+      <span class="username">{{ globalStore.userInfo.username }}</span>
       <!-- Avatar -->
       <Avatar />
     </div>

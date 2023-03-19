@@ -10,26 +10,26 @@ import { Layout } from '@/routers/constant'
 
 const homeRouter: Array<RouteRecordRaw> = [
   {
-    path: '/myAccount',
-    name: 'myAccount',
+    path: '/myInfo',
+    name: 'myInfo',
     component: Layout,
-    redirect: '/myAccount/index',
+    redirect: '/myInfo/index',
     meta: {
       keepAlive: true,
       requiresAuth: false,
-      title: '我的账户',
-      key: 'myAccount',
-      to: { name: 'myAccount' }
+      title: '用户信息',
+      key: 'myInfo',
+      to: { name: 'myInfo' }
     },
     children: [
       {
         path: 'index',
-        name: 'myAccount',
-        component: () => import('@/views/myAccount/index.vue'),
+        name: 'myInfo',
+        component: () => import('@/views/myInfo/index.vue'),
         meta: {
           keepAlive: true,
           requiresAuth: false,
-          key: 'myAccount'
+          key: 'myInfo'
         }
       }
     ]

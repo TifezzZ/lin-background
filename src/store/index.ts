@@ -18,7 +18,13 @@ export const GlobalStore = defineStore({
     // token
     token: '',
     // mobile
-    mobile: ''
+    mobile: '',
+    // userInfo
+    userInfo: {
+      username: '',
+      nickname: '',
+      picture: ''
+    }
   }),
   getters: {},
   actions: {

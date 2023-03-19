@@ -42,6 +42,12 @@ export namespace Login {
     nickname: string
     picture: string
   }
+  export interface ChangeUserInfoForm {
+    username: string
+    nickname: string
+    picture: string
+    mobile: string
+  }
   export interface ReqLoginForm {
     mobile: string
     pwd: string

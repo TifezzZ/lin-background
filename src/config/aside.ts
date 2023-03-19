@@ -59,5 +59,14 @@ export default [
       icon: '',
       title: '聊天消息'
     }
+  },
+  {
+    path: '/myInfo/index',
+    name: 'myInfo',
+    component: '/myInfo/index',
+    meta: {
+      icon: '',
+      title: '用户信息'
+    }
   }
 ]

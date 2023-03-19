@@ -79,16 +79,16 @@
           autocomplete="new-pwd"
         />
       </el-form-item>
-      <el-form-item prop="username">
-        <el-input
-          v-model="registerForm.username"
-          placeholder="请输入昵称"
-        />
-      </el-form-item>
       <el-form-item prop="nickname">
         <el-input
           v-model="registerForm.nickname"
           placeholder="请输入昵称"
+        />
+      </el-form-item>
+      <el-form-item prop="username">
+        <el-input
+          v-model="registerForm.username"
+          placeholder="请输入用户名"
         />
       </el-form-item>
       <el-form-item
@@ -170,8 +170,11 @@ const login = (formEl: FormInstance | undefined) => {
         pwd: loginForm.pwd
       }
       loginApi(data)
-        .then(() => {
+        .then(({ data }) => {
           globalStore.setMobile(loginForm.mobile)
+          globalStore.userInfo.username = data.userName
+          globalStore.userInfo.nickname = data.nickname
+          globalStore.userInfo.picture = data.picture
           router.push({ name: 'myAccount' })
         })
         .catch(() => {

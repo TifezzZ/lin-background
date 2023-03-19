@@ -1,19 +1,19 @@
 <!--
  * @Author: yujingbo
  * @Date: 2022-11
- * @LastEditors: yujingbo
- * @LastEditTime: 2023-01
+ * @LastEditors: TifezzZ
+ * @LastEditTime: 2023-03
  * @Description: 
 -->
 <template>
   <el-dropdown trigger="click">
-    <!-- <div class="avatar"> -->
-    <Avatar :alt="globalStore.userInfo" />
-    <!-- <img
-        src="@/assets/images/avatar.gif"
+    <!-- <Avatar :alt="globalStore.userInfo" /> -->
+    <div class="avatar">
+      <img
+        :src="`/api/xianYu_tbs/${globalStore.userInfo.picture}`"
         alt="avatar"
-      /> 
-    </div>-->
+      />
+    </div>
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item

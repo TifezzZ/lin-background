@@ -31,13 +31,13 @@
             <el-icon><Edit /></el-icon>
             <span>编辑</span>
           </div>
-          <div
+          <!-- <div
             class="handle-icon"
             @click="imgViewVisible = true"
           >
             <el-icon><ZoomIn /></el-icon>
             <span>查看</span>
-          </div>
+          </div> -->
           <!-- <div
             class="handle-icon"
             @click="deleteImg"
