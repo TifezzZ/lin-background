@@ -26,10 +26,10 @@
       <el-form-item prop="pwd">
         <el-input
           v-model="loginForm.pwd"
-          type="pwd"
+          type="password"
           placeholder="请输入登录密码"
-          show-pwd
-          autocomplete="new-pwd"
+          show-password
+          autocomplete="new-password"
         >
           <template #prefix>
             <el-icon class="el-input__icon"><lock /></el-icon>
@@ -73,10 +73,10 @@
       <el-form-item prop="pwd">
         <el-input
           v-model="registerForm.pwd"
-          type="pwd"
+          type="password"
           placeholder="请输入登录密码"
-          show-pwd
-          autocomplete="new-pwd"
+          show-password
+          autocomplete="new-password"
         />
       </el-form-item>
       <el-form-item prop="nickname">

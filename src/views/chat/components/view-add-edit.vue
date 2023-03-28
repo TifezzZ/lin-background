@@ -19,13 +19,13 @@
       style="width: 600px"
     >
       <el-form-item
-        label="产品名称"
+        label="消息内容"
         prop="msg"
       >
         <el-input v-model="drawerProps.rowData.msg" />
       </el-form-item>
       <el-form-item
-        label="产品图片"
+        label="商品图片"
         prop="productPicture"
       >
         <UploadImg
@@ -40,13 +40,13 @@
         </UploadImg>
       </el-form-item>
       <el-form-item
-        label="产品价格"
+        label="买家昵称"
         prop="buyerNickname"
       >
         <el-input v-model="drawerProps.rowData.buyerNickname" />
       </el-form-item>
       <el-form-item
-        label="买家头像图片"
+        label="买家头像"
         prop="buyerPicture"
       >
         <UploadImg

@@ -60,12 +60,12 @@
       />
       <el-table-column
         prop="viewsNum"
-        label="曝光量"
+        label="浏览量"
         show-overflow-tooltip
       />
       <el-table-column
         prop="views"
-        label="浏览量"
+        label="曝光量"
         show-overflow-tooltip
       />
 

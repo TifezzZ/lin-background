@@ -46,13 +46,13 @@
         <el-input v-model="drawerProps.rowData.productPrice" />
       </el-form-item>
       <el-form-item
-        label="曝光量"
+        label="浏览量"
         prop="viewsNum"
       >
         <el-input v-model="drawerProps.rowData.viewsNum" />
       </el-form-item>
       <el-form-item
-        label="浏览量"
+        label="曝光量"
         prop="views"
       >
         <el-input v-model="drawerProps.rowData.views" />
@@ -100,8 +100,8 @@ const rules = reactive({
   productName: [{ required: true, message: '请输入商品名称', trigger: 'blur' }],
   productPicture: [{ required: true, message: '请上传商品图片', trigger: 'blur' }],
   productPrice: [{ required: true, message: '请输入产品价格', trigger: 'blur' }],
-  viewsNum: [{ required: true, message: '请输入曝光量', trigger: 'blur' }],
-  views: [{ required: true, message: '请输入浏览量', trigger: 'blur' }],
+  viewsNum: [{ required: true, message: '请输入浏览量', trigger: 'blur' }],
+  views: [{ required: true, message: '请输入曝光量', trigger: 'blur' }],
   want: [{ required: true, message: '请输入想要数量', trigger: 'blur' }]
 })
 

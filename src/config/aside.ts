@@ -69,4 +69,13 @@ export default [
       title: '用户信息'
     }
   }
+  // {
+  //   path: '/others/index',
+  //   name: 'others',
+  //   component: '/others/index',
+  //   meta: {
+  //     icon: '',
+  //     title: '其他配置'
+  //   }
+  // }
 ]
