@@ -2,7 +2,7 @@
  * @Author: yujingbo
  * @Date: 2023-03
  * @LastEditors: TifezzZ
- * @LastEditTime: 2023-03
+ * @LastEditTime: 2023-04
  * @Description: 登陆注册 TODO: 最好拆分一下 把登陆注册各自封装一个组件
 -->
 <template>
@@ -62,15 +62,22 @@
       ref="registerFormRef"
       :model="registerForm"
       :rules="registerRules"
+      label-width="100"
       size="large"
     >
-      <el-form-item prop="mobile">
+      <el-form-item
+        label="手机号："
+        prop="mobile"
+      >
         <el-input
           v-model="registerForm.mobile"
           placeholder="请输入手机号"
         />
       </el-form-item>
-      <el-form-item prop="pwd">
+      <el-form-item
+        label="登录密码："
+        prop="pwd"
+      >
         <el-input
           v-model="registerForm.pwd"
           type="password"
@@ -79,13 +86,28 @@
           autocomplete="new-password"
         />
       </el-form-item>
-      <el-form-item prop="nickname">
+      <el-form-item
+        label="注册码："
+        prop="registrationNo"
+      >
+        <el-input
+          v-model="registerForm.registrationNo"
+          placeholder="请输入注册码"
+        />
+      </el-form-item>
+      <el-form-item
+        label="昵称："
+        prop="nickname"
+      >
         <el-input
           v-model="registerForm.nickname"
           placeholder="请输入昵称"
         />
       </el-form-item>
-      <el-form-item prop="username">
+      <el-form-item
+        label="用户名："
+        prop="username"
+      >
         <el-input
           v-model="registerForm.username"
           placeholder="请输入用户名"
@@ -93,7 +115,7 @@
       </el-form-item>
       <el-form-item
         prop="avatar"
-        label="用户头像"
+        label="用户头像："
       >
         <UploadImg
           v-model:imageUrl="registerForm.avatar"
@@ -192,6 +214,7 @@ const registerFormRef = ref<FormInstance>()
 const registerRules = reactive({
   mobile: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
   pwd: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  registrationNo: [{ required: true, message: '请输入密码', trigger: 'blur' }],
   username: [{ required: true, message: '请输入账号名称', trigger: 'blur' }],
   nickname: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
   avatar: [{ required: true, message: '请上传', trigger: 'blur' }]
@@ -202,7 +225,8 @@ const registerForm = reactive({
   pwd: '',
   username: '',
   nickname: '',
-  avatar: ''
+  avatar: '',
+  registrationNo: ''
 })
 function register(formEl: FormInstance | undefined) {
   if (!formEl) return
@@ -212,6 +236,7 @@ function register(formEl: FormInstance | undefined) {
       const data = {
         mobile: registerForm.mobile,
         pwd: registerForm.pwd,
+        registrationNo: registerForm.registrationNo,
         username: registerForm.username,
         nickname: registerForm.nickname,
         picture: registerForm.avatar
@@ -248,12 +273,12 @@ function register(formEl: FormInstance | undefined) {
           }
           return Promise.all([addMyAccount(myAccount), addMyPublish(myPublish), addNotice(notice)])
         })
-        .then(() => {
-          ElMessage.success('注册成功！')
+        .then((res: any) => {
+          ElMessage.success(res.message)
           showItem.value = 'login'
         })
-        .catch(() => {
-          ElMessage.error('注册失败，请联系管理员')
+        .catch((err: any) => {
+          ElMessage.error(err.message)
         })
         .finally(() => {
           loading.value = false
